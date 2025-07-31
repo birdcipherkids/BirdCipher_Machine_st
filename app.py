@@ -1,0 +1,47 @@
+import streamlit as st
+from caesar_cipher import caesar_cipher
+
+pages = [
+    st.Page(
+        "home.py",
+        title="Home",
+        icon=":material/home:"
+    ),
+    st.Page(
+        "cipher.py",
+        title="Caesar cipher",
+        icon=":material/key:"
+    ),
+
+]
+
+page = st.navigation(pages)
+page.run()
+
+
+
+with st.sidebar.container(height=310):
+
+    if page.title == 'Home':
+
+        st.page_link("home.py", label="Home")
+
+    elif page.title == 'Caesar cipher':
+
+        st.page_link("cipher.py", label="Caesar cipher")
+
+
+
+    
+    
+
+
+
+
+    
+
+
+
+
+
+
