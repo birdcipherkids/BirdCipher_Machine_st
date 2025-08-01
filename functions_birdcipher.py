@@ -1,10 +1,15 @@
 import psycopg2
 from hash import *
 
+results = ['', '']
+
 
 def login_user(username, password, role):
 
+	global results
+
 	login_check = False
+	user_old = ''
 	wdatos = bytes(password, 'utf-8')
 	h = hashlib.new(algoritmo, wdatos)
 	hash2 = HASH.generaHash(h)
@@ -29,10 +34,18 @@ def login_user(username, password, role):
 		miCursor1.execute(sql1, sql1_data)
 		dlt2 = miCursor1.fetchall()
 		login_check = True
+		user_old = 'New'
+
+	elif len(dlt1) > 0 and hash2 == dlt1[0][2]:
+
+		login_check = True
+		user_old = 'Old'
+		print(dlt1[0][2])
+		print(dlt1[0][4])
 
 	if login_check:
 
-		results = hash2
+		results = [hash2, user_old]
 
 	miConexion1.commit()
 	miConexion1.close()
