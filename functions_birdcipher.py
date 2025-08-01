@@ -1,7 +1,7 @@
 import psycopg2
 from hash import *
 
-results = ['', '']
+results = []
 
 
 def login_user(username, password, role):
@@ -45,7 +45,8 @@ def login_user(username, password, role):
 
 	if login_check:
 
-		results = [hash2, user_old]
+		results.append(hash2)
+		results.append(user_old)
 
 	miConexion1.commit()
 	miConexion1.close()
