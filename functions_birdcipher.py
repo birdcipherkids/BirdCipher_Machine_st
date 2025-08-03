@@ -4,6 +4,9 @@ import random
 from hash import *
 
 results = []
+words_password = []
+password_creator = ''
+random_separator = ''
 
 
 def login_user(username, password, role):
@@ -78,12 +81,26 @@ def login_user(username, password, role):
 	return results
 
 
+def words_inclusion(word):
 
-def password_generator(length, upper, lower, num, special):
+	global words_password
+
+	words_password.append(word)
+	print(words_password)
+
+	return words_password
+
+
+
+def password_generator(length, upper, lower, num, special, words):
+
+	global words_password
+	global password_creator
+	global random_separator
 
 	length_pass = length
 	characters = ''
-
+	
 	if upper:
 
 		characters = characters + string.ascii_uppercase
@@ -100,13 +117,27 @@ def password_generator(length, upper, lower, num, special):
 
 		characters = characters + string.punctuation
 
-	try:
+	
+	if not words:
 
-		password_creator = ''.join(random.choice(characters) for i in range(length_pass))
+	 	password_creator = ''
+	 	password_creator = ''.join(random.choice(characters) for i in range(length_pass))
 
-	except IndexError:
+	if words:
 
-		print('You must choose at least one character category')
+		password_creator = ''
+
+		for i in range(3):
+
+			random_separator = random_separator + random.choice(characters)
+
+		random_words = random.sample(words_password, length)
+		print(random_words)
+		password_creator = random_separator.join(random_words)
+		
+	#except IndexError:
+
+		#print('You must choose at least one character category')
 
 	wdatos = bytes(password_creator, 'utf-8')
 	h = hashlib.new(algoritmo, wdatos)
