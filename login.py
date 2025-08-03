@@ -1,5 +1,6 @@
 import streamlit as st
 from functions_birdcipher import *
+import time
 
 bambu_sound = 'Audios/bambu_click.mp3'
 audio_login_created = 'Audios/NewUserCreated.mp3'
@@ -34,27 +35,35 @@ with login:
 				audio_file_path = ''
 				#st.audio(bambu_sound, format = 'audio/mp3', autoplay = True)
 
-				if dynamic_value[1] == 'New':
+				placeholder = st.empty()
 
-					audio_file_path = bambu_sound
-					st.audio(audio_file_path, format = 'audio/mp3', autoplay = True)
-					audio_file_path = audio_login_created
-					st.audio(audio_file_path, format = 'audio/mp3', autoplay = True)
+				with placeholder.container():
+
+					if dynamic_value[1] == 'New':
+
+						audio_file_path = bambu_sound
+						st.audio(audio_file_path, format = 'audio/mp3', autoplay = True)
+						audio_file_path = audio_login_created
+						st.audio(audio_file_path, format = 'audio/mp3', autoplay = True)
 
 					
-				elif dynamic_value[1] == 'Old':
+					elif dynamic_value[1] == 'Old':
 
-					audio_file_path = bambu_sound
-					st.audio(audio_file_path, format = 'audio/mp3', autoplay = True)
-					audio_file_path = audio_login_correct
-					st.audio(audio_file_path, format = 'audio/mp3', autoplay = True)
+						audio_file_path = bambu_sound
+						st.audio(audio_file_path, format = 'audio/mp3', autoplay = True)
+						audio_file_path = audio_login_correct
+						st.audio(audio_file_path, format = 'audio/mp3', autoplay = True)
 
-				elif dynamic_value[1] == 'Incorrect':
+					elif dynamic_value[1] == 'Incorrect':
 
-					audio_file_path = bambu_sound
-					st.audio(audio_file_path, format = 'audio/mp3', autoplay = True)
-					audio_file_path = audio_login_incorrect
-					st.audio(audio_file_path, format = 'audio/mp3', autoplay = True)
+						audio_file_path = bambu_sound
+						st.audio(audio_file_path, format = 'audio/mp3', autoplay = True)
+						audio_file_path = audio_login_incorrect
+						st.audio(audio_file_path, format = 'audio/mp3', autoplay = True)
+
+
+				time.sleep(13)
+				placeholder.empty()
 
 				
 		with col2:
