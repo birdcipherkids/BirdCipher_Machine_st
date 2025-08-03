@@ -1,4 +1,6 @@
 import psycopg2
+import string
+import random
 from hash import *
 
 results = []
@@ -74,4 +76,45 @@ def login_user(username, password, role):
 	miConexion1.close()
 
 	return results
+
+
+
+def password_generator(length, upper, lower, num, special):
+
+	length_pass = length
+	characters = ''
+
+	if upper:
+
+		characters = characters + string.ascii_uppercase
+
+	if lower:
+
+		characters = characters + string.ascii_lowercase
+
+	if num:
+
+		characters = characters + string.digits
+
+	if special:
+
+		characters = characters + string.punctuation
+
+	try:
+
+		password_creator = ''.join(random.choice(characters) for i in range(length_pass))
+
+	except IndexError:
+
+		print('You must choose at least one character category')
+
+	wdatos = bytes(password_creator, 'utf-8')
+	h = hashlib.new(algoritmo, wdatos)
+	hash2 = HASH.generaHash(h)
+
+	results_passcreator = [password_creator, hash2]
+
+	return results_passcreator
+
+
 
