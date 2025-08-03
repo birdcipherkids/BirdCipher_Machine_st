@@ -8,6 +8,7 @@ def login_user(username, password, role):
 
 	global results
 
+	results = []
 	login_check = False
 	user_old = ''
 	wdatos = bytes(password, 'utf-8')
@@ -42,11 +43,32 @@ def login_user(username, password, role):
 		user_old = 'Old'
 		print(dlt1[0][2])
 		print(dlt1[0][4])
+		print(user_old)
 
-	if login_check:
+	elif len(dlt1) > 0 and hash2 != dlt1[0][2]:
+
+		user_old = 'Incorrect'
+		print(user_old)
+
+	elif username == '' or password == '':
+
+		user_old = 'blank'
+
+	if login_check and user_old == 'New':
+
+		results.append(dlt2[0][2])
+		results.append(user_old)
+
+	elif login_check and user_old == 'Old':
+
+		results.append(dlt1[0][2])
+		results.append(user_old)
+
+	elif login_check == False:
 
 		results.append(hash2)
 		results.append(user_old)
+
 
 	miConexion1.commit()
 	miConexion1.close()
