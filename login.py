@@ -112,9 +112,20 @@ with passcreator:
 
 			entry_words_button = st.button('Add word', type = 'primary')
 
+
 			if entry_words_button:
 
-				words_inclusion(entry_words_pass)
+				#print(entry_words_pass)
+				hackingword_results = query_rockyou(entry_words_pass)
+
+				if hackingword_results == True:
+
+					print('Hacked word')
+
+				elif hackingword_results == False:
+
+					words_inclusion(entry_words_pass)
+					print('Word added')
 
 
 

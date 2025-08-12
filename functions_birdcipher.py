@@ -91,6 +91,33 @@ def words_inclusion(word):
 	return words_password
 
 
+def query_rockyou(word):
+
+	hacked_word = False
+
+	with open('C:/rockyou.txt', 'r', encoding = 'utf-8', errors='replace') as file:
+
+		while True:
+
+			line = file.readline()
+
+			if line.strip() == word:
+
+				hacked_word = True
+				break
+
+			elif not line:
+
+				break
+
+	return hacked_word
+
+
+
+
+	
+
+
 
 def password_generator(length, upper, lower, num, special, words):
 
