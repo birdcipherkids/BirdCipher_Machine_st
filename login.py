@@ -10,7 +10,7 @@ audio_file_path = ''
 
 
 st.header('Welcome to BirdCipher Machine')
-login, passcreator = st.tabs(['Log in', 'Password creator'])
+login, passcreator, passphrase = st.tabs(['Log in', 'Random Password Generator', 'Passphrase Generator'])
 dynamic_value = ['', '']
 resulting_password = ['', '']
 
@@ -66,19 +66,23 @@ with login:
 				time.sleep(13)
 				placeholder.empty()
 
+
+
 				
 		with col2:
 
 			col2.image('Images/BirdCipher-logo.png')
 
+	hash_login = st.text_input('Your password hash (SHA 256) is:', width = 700, value = dynamic_value[0])
+
 
 with passcreator:
 
-	st.subheader('Password generator')
+	#st.subheader('Password Generator')
 
-	pass_length = st.slider('Select your password length', min_value = 1, max_value = 40, value = 10)
+	pass_length = st.slider('Select your password length', min_value = 10, max_value = 40, value = 20)
 
-	colm1, colm2, colm3, colm4, colm5 = st.columns(5)
+	colm1, colm2, colm3, colm4 = st.columns(4)
 
 	with colm1:
 
@@ -96,53 +100,58 @@ with passcreator:
 
 		special_chr = st.checkbox('Punctuation')
 
-	with colm5:
-
-		words_pass = st.checkbox('Personal words')
-
-	if words_pass:
-
-		col_words, col_words_button = st.columns(2, vertical_alignment = 'bottom')
-
-		with col_words:
-
-			entry_words_pass = st.text_input('Enter your personal words for password creation: ', width = 400)
-
-		with col_words_button:
-
-			entry_words_button = st.button('Add word', type = 'primary')
-
-
-			if entry_words_button:
-
-				#print(entry_words_pass)
-				hackingword_results = query_rockyou(entry_words_pass)
-
-				if hackingword_results == True:
-
-					print('Hacked word')
-
-				elif hackingword_results == False:
-
-					words_inclusion(entry_words_pass)
-					print('Word added')
-
-
-
 	create_pass_button = st.button('Create password', type = 'primary')
 
 	if create_pass_button:
 
 		resulting_password = ['', '']
-		resulting_password = password_generator(pass_length, uppercase_chr, lowercase_chr, numerical_chr, special_chr, words_pass)
+		resulting_password = password_generator(pass_length, uppercase_chr, lowercase_chr, numerical_chr, special_chr)
 		password_crtd = st.text_input('Your password is: ', key = 'password_cr', width = 500, value = resulting_password[0])
 		hash_login = st.text_input('Your password hash (SHA 256) is:', width = 700, value = resulting_password[1])
 
 
+with passphrase:
+
+	st.write('')
+		
+	col_words_pss, col_words_button_pss = st.columns(2, vertical_alignment = 'bottom')
+
+	with col_words_pss:
+
+		entry_words_pass_pss = st.text_input('Enter your secret word for password creation: ', width = 400)
+
+	with col_words_button_pss:
+
+		entry_words_button_pss = st.button('Add word to your vault', type = 'primary')
+
+		if entry_words_button_pss:
+
+			#print(entry_words_pass)
+			hackingword_results = query_rockyou(entry_words_pass_pss)
+
+			if hackingword_results == True:
+
+				print('Hacked word')
+
+			elif hackingword_results == False:
+
+				words_inclusion(entry_words_pass_pss)
+				print('Word added')
+
+
+	st.write('')
+	passphrase_length = st.slider('Define the number of secret words for your password', min_value = 3, max_value = 10, value = 4,
+		width = 550)
 
 
 
-hash_login = st.text_input('Your password hash (SHA 256) is:', width = 700, value = dynamic_value[0])
+
+
+
+
+
+
+
 
 
 

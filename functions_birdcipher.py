@@ -112,14 +112,7 @@ def query_rockyou(word):
 
 	return hacked_word
 
-
-
-
-	
-
-
-
-def password_generator(length, upper, lower, num, special, words):
+def password_generator(length, upper, lower, num, special):
 
 	global words_password
 	global password_creator
@@ -144,23 +137,26 @@ def password_generator(length, upper, lower, num, special, words):
 
 		characters = characters + string.punctuation
 
+	password_creator = ''
+	password_creator = ''.join(random.choice(characters) for i in range(length_pass))
+
 	
-	if not words:
+	# if not words:
 
-	 	password_creator = ''
-	 	password_creator = ''.join(random.choice(characters) for i in range(length_pass))
+	#  	password_creator = ''
+	#  	password_creator = ''.join(random.choice(characters) for i in range(length_pass))
 
-	if words:
+	# if words:
 
-		password_creator = ''
+	# 	password_creator = ''
 
-		for i in range(3):
+	# 	for i in range(3):
 
-			random_separator = random_separator + random.choice(characters)
+	# 		random_separator = random_separator + random.choice(characters)
 
-		random_words = random.sample(words_password, length)
-		print(random_words)
-		password_creator = random_separator.join(random_words)
+	# 	random_words = random.sample(words_password, length)
+	# 	print(random_words)
+	# 	password_creator = random_separator.join(random_words)
 		
 	#except IndexError:
 
