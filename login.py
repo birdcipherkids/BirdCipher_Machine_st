@@ -80,6 +80,8 @@ with passcreator:
 
 	#st.subheader('Password Generator')
 
+	st.write('')
+
 	pass_length = st.slider('Select your password length', min_value = 10, max_value = 40, value = 20)
 
 	colm1, colm2, colm3, colm4 = st.columns(4)
@@ -112,31 +114,33 @@ with passcreator:
 
 with passphrase:
 
-	st.write('')
+	with st.form(key = 'passphrase_button_form', enter_to_submit = False):
+
+		st.write('')
 		
-	col_words_pss, col_words_button_pss = st.columns(2, vertical_alignment = 'bottom')
+		col_words_pss, col_words_button_pss = st.columns(2, vertical_alignment = 'bottom')
 
-	with col_words_pss:
+		with col_words_pss:
 
-		entry_words_pass_pss = st.text_input('Enter your secret word for password creation: ', width = 400)
+			entry_words_pass_pss = st.text_input('Enter your secret word for password creation: ', width = 400)
 
-	with col_words_button_pss:
+		with col_words_button_pss:
 
-		entry_words_button_pss = st.button('Add word to your vault', type = 'primary')
+			entry_words_button_pss = st.form_submit_button('Add word to your vault', type = 'primary')
 
-		if entry_words_button_pss:
+			if entry_words_button_pss:
 
-			#print(entry_words_pass)
-			hackingword_results = query_rockyou(entry_words_pass_pss)
+				#print(entry_words_pass)
+				hackingword_results = query_rockyou(entry_words_pass_pss)
 
-			if hackingword_results == True:
+				if hackingword_results == True:
 
-				print('Hacked word')
+					print('Hacked word')
 
-			elif hackingword_results == False:
+				elif hackingword_results == False:
 
-				words_inclusion(entry_words_pass_pss)
-				print('Word added')
+					words_inclusion(entry_words_pass_pss)
+					print('Word added')
 
 
 	st.write('')
