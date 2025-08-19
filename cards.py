@@ -16,3 +16,14 @@ def social_engineering():
 
 	st.page_link('social_eng.py', label = 'Social Engineering', icon = ':material/psychology:')
 	st.image('Images/Social engineering-logo.png', width = 290)
+
+
+def hashing():
+
+	st.page_link('hashing.py', label = 'Hashing', icon = ':material/encrypted:')
+	st.image('Images/Hashing-logo.png', use_container_width = True)
+
+def cryptography():
+
+	st.page_link('cipher.py', label = 'Classic Cryptography', icon = ':material/encrypted_add_circle:')
+	st.image('Images/Cryptography-logo.png', use_container_width = True)

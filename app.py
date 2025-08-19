@@ -16,8 +16,12 @@ pages = [
         title = 'Social Engineering',
         icon = ':material/psychology:'),
     st.Page(
+        'hashing.py',
+        title = 'Hashing',
+        icon = ':material/encrypted:'),
+    st.Page(
         "cipher.py",
-        title="Caesar cipher",
+        title = 'Cryptography',
         icon=":material/key:"
     ),
 
@@ -32,19 +36,23 @@ with st.sidebar.container(height=310):
 
     if page.title == 'Home':
 
-        st.page_link("home.py", label="Home")
+        st.page_link("home.py", label = 'Home')
 
     elif page.title == 'Login':
 
-        st.page_link("login.py", label="Login")
+        st.page_link("login.py", label = 'Login')
 
     elif page.title == 'Social Engineering':
 
         st.page_link('social_eng.py', label = 'Social engineering')
 
-    elif page.title == 'Caesar cipher':
+    elif page.title == 'Hashing':
 
-        st.page_link("cipher.py", label="Caesar cipher")
+        st.page_link('hashing.py', label = 'Hashing')
+
+    elif page.title == 'Cryptography':
+
+        st.page_link("cipher.py", label = 'Caesar cipher')
 
 
 
