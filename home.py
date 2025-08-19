@@ -1,5 +1,6 @@
 import streamlit as st
-from cards import (login_card, social_engineering, hashing, cryptography)
+from cards import (login_card, social_engineering, hashing, cryptography, messaging,
+	digital_signature)
 
 col_init1, col_init2 = st.columns([2,1])
 
@@ -26,4 +27,16 @@ with cols[0].container(height = 310):
 with cols[1].container(height = 310):
 
 	cryptography()
+
+with cols[0].container(height = 310):
+
+	messaging()
+
+with cols[1].container(height = 310):
+
+	digital_signature()
+
+
+
+
 

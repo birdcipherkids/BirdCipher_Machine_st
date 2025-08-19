@@ -27,3 +27,13 @@ def cryptography():
 
 	st.page_link('cipher.py', label = 'Classic Cryptography', icon = ':material/encrypted_add_circle:')
 	st.image('Images/Cryptography-logo.png', use_container_width = True)
+
+def messaging():
+
+	st.page_link('encrypted_messaging.py', label = 'Encrypted Messaging', icon = ':material/chat_apps_script:')
+	st.image('Images/Crypto Messaging-logo.png', use_container_width = True)
+
+def digital_signature():
+
+	st.page_link('digital_signature.py', label = 'Digital Signature', icon = ':material/checkbook:')
+	st.image('Images/Digital Signature-logo.png', use_container_width = True)

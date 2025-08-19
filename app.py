@@ -20,10 +20,17 @@ pages = [
         title = 'Hashing',
         icon = ':material/encrypted:'),
     st.Page(
-        "cipher.py",
+        'cipher.py',
         title = 'Cryptography',
-        icon=":material/key:"
-    ),
+        icon = ':material/key:'),
+    st.Page(
+        'encrypted_messaging.py',
+        title = 'Messaging',
+        icon = ':material/chat_apps_script:'),
+    st.Page(
+        'digital_signature.py',
+        title = 'Digital Signature',
+        icon = ':material/checkbook:')
 
 ]
 
@@ -52,7 +59,15 @@ with st.sidebar.container(height=310):
 
     elif page.title == 'Cryptography':
 
-        st.page_link("cipher.py", label = 'Caesar cipher')
+        st.page_link('cipher.py', label = 'Caesar cipher')
+
+    elif page.title == 'Messaging':
+
+        st.page_link('encrypted_messaging.py', label = 'Encrypted Messaging')
+
+    elif page.title == 'Digital Signature':
+
+        st.page_link('digital_signature.py', label = 'Digital Signature')
 
 
 
