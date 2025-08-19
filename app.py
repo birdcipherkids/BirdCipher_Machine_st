@@ -12,6 +12,10 @@ pages = [
         title = 'Login',
         icon = ':material/passkey:'),
     st.Page(
+        'social_eng.py',
+        title = 'Social Engineering',
+        icon = ':material/psychology:'),
+    st.Page(
         "cipher.py",
         title="Caesar cipher",
         icon=":material/key:"
@@ -33,6 +37,10 @@ with st.sidebar.container(height=310):
     elif page.title == 'Login':
 
         st.page_link("login.py", label="Login")
+
+    elif page.title == 'Social Engineering':
+
+        st.page_link('social_eng.py', label = 'Social engineering')
 
     elif page.title == 'Caesar cipher':
 
