@@ -143,27 +143,16 @@ with passphrase:
 					print('Word added')
 
 
-	st.write('')
-	passphrase_length = st.slider('Define the number of secret words for your password', min_value = 3, max_value = 10, value = 4,
-		width = 550)
+	with st.form(key = 'passphrase_send_form', enter_to_submit = False):
 
+		st.write('')
+		st.write('ADD PASSPHRASE TO YOUR VAULT')
+		
+		separators = st.radio('Define the separator for your secrets words:', ['--', '.', '_', '!', '?'], horizontal=True)
+		passphrase_length = st.slider('Define the number of secret words for your password', min_value = 3, max_value = 10, value = 4,
+			width = 550)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		send_my_passphrase = st.form_submit_button('Add passphrase to your vault', type = 'primary')
 
 	
-
-
 
