@@ -4,20 +4,22 @@ import random
 from hash import *
 
 user_db = ''
+user_old = ''
 results = []
 words_password = []
 password_creator = ''
 random_separator = ''
+login_check = False
 
 
 def login_user(username, password, role):
 
 	global results
 	global user_db
+	global login_check
+	global user_old
 
 	results = []
-	login_check = False
-	user_old = ''
 	wdatos = bytes(password, 'utf-8')
 	h = hashlib.new(algoritmo, wdatos)
 	hash2 = HASH.generaHash(h)
@@ -41,6 +43,8 @@ def login_user(username, password, role):
 
 	if len(dlt1) == 0 and username != '' and password != '':
 
+		user_old = ''
+		login_check = False
 		miCursor1.execute(sql2, sql2_data)
 		miCursor1.execute(sql202, sql202_data)
 		miCursor1.execute(sql1, sql1_data)
@@ -51,6 +55,8 @@ def login_user(username, password, role):
 
 	elif len(dlt1) > 0 and hash2 == dlt1[0][2]:
 
+		user_old = ''
+		login_check = False
 		login_check = True
 		user_old = 'Old'
 		user_db = dlt1[0][1]
@@ -60,11 +66,15 @@ def login_user(username, password, role):
 
 	elif len(dlt1) > 0 and hash2 != dlt1[0][2]:
 
+		user_old = ''
+		login_check = False
 		user_old = 'Incorrect'
 		print(user_old)
 
 	elif username == '' or password == '':
 
+		user_old = ''
+		login_check = False
 		user_old = 'blank'
 
 	if login_check and user_old == 'New':
@@ -79,6 +89,7 @@ def login_user(username, password, role):
 
 	elif login_check == False:
 
+		print(user_old)
 		results.append(hash2)
 		results.append(user_old)
 
@@ -93,21 +104,28 @@ def words_inclusion(word, user):
 
 	global words_password
 	global user_db
+	global login_check
 
-	user = user_db
-	miConexion22 = psycopg2.connect(host = 'bps57o4k0svfjp9fi4vv-postgresql.services.clever-cloud.com', port = 50013, 
-		user = 'u8kpoxoaaxlswsvwrn12', dbname = 'bps57o4k0svfjp9fi4vv', password = '5Q00YR5C0e4pnZZEnd5e')
+	if login_check:
 
-	miCursor22 = miConexion22.cursor()
-	sql3 = 'update user_words set words = concat(words, word) where username = (%s)'
-	sql3_data = (user, )
-	miCursor22.execute(sql3, sql3_data)
-	#dlt3 = miCursor22.fetchall()
-	miConexion22.commit()
-	miConexion22.close()
+		user = user_db
+		miConexion22 = psycopg2.connect(host = 'bps57o4k0svfjp9fi4vv-postgresql.services.clever-cloud.com', port = 50013, 
+			user = 'u8kpoxoaaxlswsvwrn12', dbname = 'bps57o4k0svfjp9fi4vv', password = '5Q00YR5C0e4pnZZEnd5e')
 
-	words_password.append(word)
-	print(words_password)
+		miCursor22 = miConexion22.cursor()
+		sql3 = 'update user_words set words = concat(words, word) where username = (%s)'
+		sql3_data = (user, )
+		miCursor22.execute(sql3, sql3_data)
+		#dlt3 = miCursor22.fetchall()
+		miConexion22.commit()
+		miConexion22.close()
+
+		words_password.append(word)
+		print(words_password)
+
+	
+
+
 
 	return words_password
 

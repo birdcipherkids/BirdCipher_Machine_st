@@ -15,7 +15,7 @@ def login_card():
 def social_engineering():
 
 	st.page_link('social_eng.py', label = 'Social Engineering', icon = ':material/psychology:')
-	st.image('Images/Social engineering-logo.png', width = 290)
+	st.image('Images/Social engineering-logo.png', width = 290, use_container_width = True)
 
 
 def hashing():

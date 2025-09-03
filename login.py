@@ -10,7 +10,8 @@ audio_file_path = ''
 
 
 st.header('Welcome to BirdCipher Machine')
-login, passcreator, passphrase = st.tabs(['Log in', 'Random Password Generator', 'Passphrase Generator'])
+login, passcreator, passphrase, vault, face_recog = st.tabs([
+	'Log in', 'Password Generator', 'Passphrase Generator', 'Password Vault', 'Face Recognition'])
 dynamic_value = ['', '']
 resulting_password = ['', '']
 
@@ -73,7 +74,9 @@ with login:
 
 			col2.image('Images/BirdCipher-logo.png')
 
-	hash_login = st.text_input('Your password hash (SHA 256) is:', width = 700, value = dynamic_value[0])
+	if dynamic_value[1] == 'New' or dynamic_value[1] == 'Old':
+
+		hash_login = st.text_input('Your password hash (SHA 256) is:', width = 700, value = dynamic_value[0])
 
 
 with passcreator:
@@ -139,8 +142,14 @@ with passphrase:
 
 				elif hackingword_results == False:
 
-					words_inclusion(entry_words_pass_pss)
-					print('Word added')
+					if login_check:
+
+						words_inclusion(entry_words_pass_pss, user_db)
+						print('Word added')
+
+					
+
+
 
 
 	with st.form(key = 'passphrase_send_form', enter_to_submit = False):
