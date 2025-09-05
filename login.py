@@ -67,8 +67,6 @@ with login:
 				time.sleep(13)
 				placeholder.empty()
 
-
-
 				
 		with col2:
 
@@ -146,10 +144,6 @@ with passphrase:
 
 						words_inclusion(entry_words_pass_pss, user_db)
 						print('Word added')
-
-					
-
-
 
 
 	with st.form(key = 'passphrase_send_form', enter_to_submit = False):

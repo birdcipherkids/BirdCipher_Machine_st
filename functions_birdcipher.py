@@ -1,6 +1,8 @@
 import psycopg2
 import string
 import random
+import os
+import base64
 from hash import *
 
 user_db = ''
@@ -18,11 +20,15 @@ def login_user(username, password, role):
 	global user_db
 	global login_check
 	global user_old
+	global salt
 
 	results = []
 	wdatos = bytes(password, 'utf-8')
 	h = hashlib.new(algoritmo, wdatos)
 	hash2 = HASH.generaHash(h)
+
+	salt = os.urandom(16)
+	salt_dec = base64.b64encode(salt).decode('ascii')
 
 	miConexion1 = psycopg2.connect(host = 'bps57o4k0svfjp9fi4vv-postgresql.services.clever-cloud.com', port = 50013, 
 	user = 'u8kpoxoaaxlswsvwrn12', dbname = 'bps57o4k0svfjp9fi4vv', password = '5Q00YR5C0e4pnZZEnd5e')
@@ -32,8 +38,8 @@ def login_user(username, password, role):
 	sql1 = 'select * from users where username = (%s)'
 	sql1_data = (username, )
 
-	sql2 = 'insert into users(username, password, position, books, keys, swords, caduceus) values(%s,%s,%s,%s,%s,%s,%s)'
-	sql2_data = (username, hash2, role, 1, 0, 0, 0)
+	sql2 = 'insert into users(username, password, position, salt, books, keys, swords, caduceus) values(%s,%s,%s,%s,%s,%s,%s,%s)'
+	sql2_data = (username, hash2, role, salt_dec, 1, 0, 0, 0)
 
 	sql202 = 'insert into user_words(username, password, words) values(%s,%s,%s)'
 	sql202_data = (username, hash2, '')
