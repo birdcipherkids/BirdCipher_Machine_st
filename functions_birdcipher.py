@@ -119,19 +119,14 @@ def words_inclusion(word, user):
 			user = 'u8kpoxoaaxlswsvwrn12', dbname = 'bps57o4k0svfjp9fi4vv', password = '5Q00YR5C0e4pnZZEnd5e')
 
 		miCursor22 = miConexion22.cursor()
-		sql3 = 'update user_words set words = concat(words, word) where username = (%s)'
-		sql3_data = (user, )
+		sql3 = 'update user_words set words = concat(words, %s, %s) where username = (%s)'
+		sql3_data = (' ', word, user)
 		miCursor22.execute(sql3, sql3_data)
-		#dlt3 = miCursor22.fetchall()
 		miConexion22.commit()
 		miConexion22.close()
 
 		words_password.append(word)
 		print(words_password)
-
-	
-
-
 
 	return words_password
 
