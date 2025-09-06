@@ -79,38 +79,40 @@ with login:
 
 with passcreator:
 
-	#st.subheader('Password Generator')
+	with st.form(key = 'password_button_form', enter_to_submit = False):
 
-	st.write('')
+		#st.subheader('Password Generator')
 
-	pass_length = st.slider('Select your password length', min_value = 10, max_value = 40, value = 20)
+		st.write('')
 
-	colm1, colm2, colm3, colm4 = st.columns(4)
+		pass_length = st.slider('Select your password length', min_value = 10, max_value = 40, value = 20, width = 600)
 
-	with colm1:
+		colm1, colm2, colm3, colm4 = st.columns(4)
 
-		uppercase_chr = st.checkbox("Upper case")
+		with colm1:
 
-	with colm2:
+			uppercase_chr = st.checkbox("Upper case")
 
-		lowercase_chr = st.checkbox('Lower case')
+		with colm2:
 
-	with colm3:
+			lowercase_chr = st.checkbox('Lower case')
 
-		numerical_chr = st.checkbox('Numerical')
+		with colm3:
 
-	with colm4:
+			numerical_chr = st.checkbox('Numerical')
 
-		special_chr = st.checkbox('Punctuation')
+		with colm4:
 
-	create_pass_button = st.button('Create password', type = 'primary')
+			special_chr = st.checkbox('Punctuation')
 
-	if create_pass_button:
+		create_pass_button = st.form_submit_button('Create password', type = 'primary')
 
-		resulting_password = ['', '']
-		resulting_password = password_generator(pass_length, uppercase_chr, lowercase_chr, numerical_chr, special_chr)
-		password_crtd = st.text_input('Your password is: ', key = 'password_cr', width = 500, value = resulting_password[0])
-		hash_login = st.text_input('Your password hash (SHA 256) is:', width = 700, value = resulting_password[1])
+		if create_pass_button:
+
+			resulting_password = ['', '']
+			resulting_password = password_generator(pass_length, uppercase_chr, lowercase_chr, numerical_chr, special_chr)
+			password_crtd = st.text_input('Your password is: ', key = 'password_cr', width = 500, value = resulting_password[0])
+			hash_login = st.text_input('Your password hash (SHA 256) is:', width = 700, value = resulting_password[1])
 
 
 with passphrase:
