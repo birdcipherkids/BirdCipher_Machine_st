@@ -81,9 +81,7 @@ with passcreator:
 
 	with st.form(key = 'password_button_form', enter_to_submit = False):
 
-		#st.subheader('Password Generator')
-
-		st.write('')
+		st.subheader('Create your random password')
 
 		pass_length = st.slider('Select your password length', min_value = 10, max_value = 40, value = 20, width = 600)
 
@@ -113,6 +111,25 @@ with passcreator:
 			resulting_password = password_generator(pass_length, uppercase_chr, lowercase_chr, numerical_chr, special_chr)
 			password_crtd = st.text_input('Your password is: ', key = 'password_cr', width = 500, value = resulting_password[0])
 			hash_login = st.text_input('Your password hash (SHA 256) is:', width = 700, value = resulting_password[1])
+
+
+	with st.form(key = 'password_send_form', enter_to_submit = False):
+
+		st.subheader('Store the password in your vault')
+
+		col_pass1, col_pass2 = st.columns([2,1])
+
+		with col_pass1:
+
+			app_input = st.text_input('Enter the app for your password: ', width = 700)
+			user_app_input = st.text_input('Enter your username for the app: ', width = 700)
+			submit_password = st.form_submit_button('Save your password in vault', type = 'primary')
+
+		with col_pass2:
+
+			col_pass2.image('Images/BirdCipher-logo-white.png', width = 200)
+
+
 
 
 with passphrase:
