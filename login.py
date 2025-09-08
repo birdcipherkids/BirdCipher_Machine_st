@@ -125,11 +125,13 @@ with passcreator:
 			user_app_input = st.text_input('Enter your username for the app: ', width = 700)
 			submit_password = st.form_submit_button('Save your password in vault', type = 'primary')
 
+			if submit_password:
+
+				send_random_password(user_db, passw, app_input, user_app_input, resulting_password[0])
+
 		with col_pass2:
 
 			col_pass2.image('Images/BirdCipher-logo-white.png', width = 200)
-
-
 
 
 with passphrase:

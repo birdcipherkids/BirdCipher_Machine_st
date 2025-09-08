@@ -3,6 +3,9 @@ import string
 import random
 import os
 import base64
+from cryptography.fernet import Fernet
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from hash import *
 
 user_db = ''
@@ -210,6 +213,50 @@ def password_generator(length, upper, lower, num, special):
 	results_passcreator = [password_creator, hash2]
 
 	return results_passcreator
+
+
+def send_random_password(username, password, app, user_app, pass_app):
+
+	qdatos = bytes(password, 'utf-8')
+	h = hashlib.new(algoritmo, qdatos)
+	hash31 = HASH.generaHash(h)
+
+	miConexion31 = psycopg2.connect(host = 'bps57o4k0svfjp9fi4vv-postgresql.services.clever-cloud.com', port = 50013, 
+	user = 'u8kpoxoaaxlswsvwrn12', dbname = 'bps57o4k0svfjp9fi4vv', password = '5Q00YR5C0e4pnZZEnd5e')
+
+	miCursor31 = miConexion31.cursor()
+	sql31 = 'select * from users where username = (%s)'
+	sql31_data = (username, )
+	miCursor31.execute(sql31, sql31_data)
+	dlt31 = miCursor31.fetchall()
+	salt_user = dlt31[0][4]
+	salt_user2 = base64.b64decode(salt_user)
+	print(salt_user2)
+
+	kdf = PBKDF2HMAC(
+		algorithm = hashes.SHA256(),
+		length = 32,
+		salt = salt_user2,
+		iterations = 1_200_000,
+		)
+
+	key = base64.urlsafe_b64encode(kdf.derive(password.encode('utf-8')))
+	f = Fernet(key)
+
+	token = f.encrypt(pass_app.encode('utf-8'))
+
+	sql311 = 'insert into password_vault(username, password, app, user_app, pass_app) values(%s, %s, %s, %s, %s)'
+	sql311_data = (username, hash31, app, user_app, token.decode())
+
+	#if login_check and username != '' and password == hash31:
+
+	miCursor31.execute(sql311, sql311_data)
+
+
+	miConexion31.commit()
+	miConexion31.close()
+
+
 
 
 #def send_passphrase():
