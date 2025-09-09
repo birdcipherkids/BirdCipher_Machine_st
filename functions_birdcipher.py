@@ -263,5 +263,51 @@ def send_random_password(username, password, app, user_app, pass_app):
 
 
 
+def bring_password(username, password, app):
+
+	miConexion41 = psycopg2.connect(host = 'bps57o4k0svfjp9fi4vv-postgresql.services.clever-cloud.com', port = 50013, 
+	user = 'u8kpoxoaaxlswsvwrn12', dbname = 'bps57o4k0svfjp9fi4vv', password = '5Q00YR5C0e4pnZZEnd5e')
+
+	miCursor41 = miConexion41.cursor()
+	sql41 = 'select * from users where username = (%s)'
+	sql41_data = (username, )
+	miCursor41.execute(sql41, sql41_data)
+	dlt41 = miCursor41.fetchall()
+	salt_user41 = dlt41[0][4]
+	salt_user412 = base64.b64decode(salt_user41)
+
+	kdf = PBKDF2HMAC(
+		algorithm = hashes.SHA256(),
+		length = 32,
+		salt = salt_user412,
+		iterations = 1_200_000,
+		)
+
+	key = base64.url_safe_b64encode(kdf.derive(password.encode('utf-8')))
+	f = Fernet(key)
+
+	sql444 = 'select * from password_vault where username = (%s) and app = (%s)'
+	sql444_data = (username, app)
+	miCursor41.execute(sql444, sql444_data)
+	dlt444 = miCursor41.fetchall()
+	#username_app = dlt444[0][]
+
+
+
+
+
+
+
+
+
+
+
+
+
+	miConexion41.commit()
+	miConexion41.close()
+
+
+
 
 

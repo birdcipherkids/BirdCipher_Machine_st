@@ -121,7 +121,7 @@ with passcreator:
 
 		with col_pass1:
 
-			app_input = st.text_input('Enter the app for your password: ', width = 700)
+			app_input = st.text_input('Enter the app name for your password: ', width = 700)
 			user_app_input = st.text_input('Enter your username for the app: ', width = 700)
 			submit_password = st.form_submit_button('Save your password in vault', type = 'primary')
 
@@ -131,7 +131,7 @@ with passcreator:
 
 		with col_pass2:
 
-			col_pass2.image('Images/BirdCipher-logo-white.png', width = 200)
+			col_pass2.image('Images/BirdCipher-logo-white.png')
 
 
 with passphrase:
@@ -177,6 +177,27 @@ with passphrase:
 			width = 550)
 
 		send_my_passphrase = st.form_submit_button('Add passphrase to your vault', type = 'primary')
+
+
+
+with vault:
+
+	with st.form(key = 'vault_button_form', enter_to_submit = False):
+
+		st.subheader('Password vault')
+
+		col_vault1, col_vault2 = st.columns([2,1])
+
+		with col_vault1:
+
+			user_app_enquiry = st.text_input('Enter the app name to which you wish to login: ', width = 400)
+			username_app_enquiry = st.text_input('Your username for this app is: ', width = 400)
+			password_app_enquiry = st.text_input('Your password for this app is: ', width = 400)
+			submit_vault = st.form_submit_button('Bring your password', type = 'primary')
+
+		with col_vault2:
+
+			col_vault2.image('Images/Merkaba.png')
 
 	
 
