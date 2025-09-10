@@ -14,6 +14,7 @@ login, passcreator, passphrase, vault, face_recog = st.tabs([
 	'Log in', 'Password Generator', 'Passphrase Generator', 'Password Vault', 'Face Recognition'])
 dynamic_value = ['', '']
 resulting_password = ['', '']
+password_final = ''
 
 with login:
 
@@ -103,17 +104,15 @@ with passcreator:
 
 			special_chr = st.checkbox('Punctuation')
 
-		create_pass_button = st.form_submit_button('Create password', type = 'primary')
+		#create_pass_button = st.button('Create password', type = 'primary')
 
-		if create_pass_button:
+		#if create_pass_button:
 
-			resulting_password = ['', '']
-			resulting_password = password_generator(pass_length, uppercase_chr, lowercase_chr, numerical_chr, special_chr)
-			password_crtd = st.text_input('Your password is: ', key = 'password_cr', width = 500, value = resulting_password[0])
-			hash_login = st.text_input('Your password hash (SHA 256) is:', width = 700, value = resulting_password[1])
+			
+		
 
 
-	with st.form(key = 'password_send_form', enter_to_submit = False):
+	#with st.form(key = 'password_send_form', enter_to_submit = False):
 
 		st.subheader('Store the password in your vault')
 
@@ -127,7 +126,11 @@ with passcreator:
 
 			if submit_password:
 
-				send_random_password(user_db, passw, app_input, user_app_input, resulting_password[0])
+				resulting_password = ['', '']
+				resulting_password = password_generator(pass_length, uppercase_chr, lowercase_chr, numerical_chr, special_chr)
+				password_crtd = st.text_input('Your password is: ', key = 'password_cr', width = 500, value = resulting_password[0])
+				hash_login = st.text_input('Your password hash (SHA 256) is:', width = 700, value = resulting_password[1])
+				send_random_password(user_db, passw, app_input, user_app_input, password_crtd)
 
 		with col_pass2:
 
@@ -187,13 +190,29 @@ with vault:
 		st.subheader('Password vault')
 
 		col_vault1, col_vault2 = st.columns([2,1])
+		results_vault_for_app = ['','']
+
+		# if 'username_app' not in st.session_state:
+
+		# 	st.session_state['username_app'] = ''
+
+		# if 'password_app' not in st.session_state:
+
+		# 	st.session_state['password_app'] = ''
+
 
 		with col_vault1:
 
 			user_app_enquiry = st.text_input('Enter the app name to which you wish to login: ', width = 400)
-			username_app_enquiry = st.text_input('Your username for this app is: ', width = 400)
-			password_app_enquiry = st.text_input('Your password for this app is: ', width = 400)
 			submit_vault = st.form_submit_button('Bring your password', type = 'primary')
+
+			if submit_vault:
+
+				results_vault_for_app = ['','']
+				results_vault_for_app = bring_password(user_db, passw, user_app_enquiry)
+				username_app_enquiry = st.text_input('Your username for this app is: ', width = 400, value = results_vault_for_app[0])
+				password_app_enquiry = st.text_input('Your password for this app is: ', width = 400, value = results_vault_for_app[1])
+
 
 		with col_vault2:
 
