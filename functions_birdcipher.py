@@ -237,6 +237,9 @@ def password_generator(length, upper, lower, num, special):
 # 	return token
 
 
+
+
+
 def send_random_password(username, password, app, user_app, pass_app):
 
 	qdatos = bytes(password, 'utf-8')
@@ -322,6 +325,39 @@ def bring_password(username, password, app):
 	miConexion41.close()
 
 	return result_vault_query
+
+
+
+def split_secretwords(username, num_words, sep):
+
+	miConexion51 = psycopg2.connect(host = 'bps57o4k0svfjp9fi4vv-postgresql.services.clever-cloud.com', port = 50013, 
+	user = 'u8kpoxoaaxlswsvwrn12', dbname = 'bps57o4k0svfjp9fi4vv', password = '5Q00YR5C0e4pnZZEnd5e')
+
+	miCursor51 = miConexion51.cursor()
+	sql51 = 'select * from user_words where username = (%s)'
+	sql51_data = (username, )
+	miCursor51.execute(sql51, sql51_data)
+	dlt51 = miCursor51.fetchall()
+	sec_words = dlt51[0][3]
+
+	miConexion51.commit()
+	miConexion51.close()
+
+	sec_words_list = sec_words.split()
+	passphrase = ''
+
+	if num_words <= len(sec_words_list) - 1:
+
+		subset = random.sample(sec_words_list, num_words)
+
+	passphrase = sep.join(subset)
+	print(passphrase)
+
+	return passphrase
+
+
+
+
 
 
 

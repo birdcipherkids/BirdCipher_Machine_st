@@ -175,11 +175,15 @@ with passphrase:
 		st.write('')
 		st.write('ADD PASSPHRASE TO YOUR VAULT')
 		
-		separators = st.radio('Define the separator for your secrets words:', ['--', '.', '_', '!', '?'], horizontal=True)
+		separators = st.radio('Define the separator for your secrets words:', ['$', '.', '_', '!', '?'], horizontal=True)
 		passphrase_length = st.slider('Define the number of secret words for your password', min_value = 3, max_value = 10, value = 4,
 			width = 550)
 
 		send_my_passphrase = st.form_submit_button('Add passphrase to your vault', type = 'primary')
+
+		if send_my_passphrase:
+
+			split_secretwords(user_db, passphrase_length, separators)
 
 
 
