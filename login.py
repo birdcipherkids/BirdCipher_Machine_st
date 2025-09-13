@@ -26,7 +26,7 @@ with login:
 
 			st.subheader('Log in to BirdCipher')
 			user = st.text_input('Username', key = 'username', width = 500)
-			passw = st.text_input('Password', key = 'main_password', width = 500)
+			passw = st.text_input('Password', key = 'main_password', type = 'password', width = 500)
 			role_login = st.text_input('Role', key = 'role', width = 500)
 			submit_button = st.form_submit_button('Send data', type="primary")
 
