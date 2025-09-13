@@ -3,6 +3,8 @@ import string
 import random
 import os
 import base64
+import time
+from playsound import playsound
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
@@ -18,6 +20,67 @@ random_separator = ''
 login_check = False
 
 
+def check_master_password(password_checking):
+
+	specials = "!#$%&()*+,-./:;<=>?@[\\]^_`{|}~¡"
+	mayusculas = 'ABCDEFGHIJKLMNÑOPQRSTUVWXYZ'
+	minusculas = 'abcdefghijklmnñopqrstuvwxyz'
+	numeros = '1234567890'
+	password_checking_ok = False
+
+
+	password_to_evaluate = password_checking
+	evaluation = [False, False, False, False]
+	evaluation_audios_es = ['Audios/caracter_especial.mp3', 'Audios/letra_mayuscula.mp3', 'Audios/letra_minuscula.mp3', 
+	'Audios/numero_contrasena.mp3']
+
+	for i in password_to_evaluate:
+
+		if i in specials:
+
+			evaluation[0] = True
+		
+		if i in mayusculas:
+
+			evaluation[1] = True
+
+		if i in minusculas:
+
+			evaluation[2] = True
+
+		if i in numeros:
+
+			evaluation[3] = True
+
+
+	count_lack = 4
+	x = 0
+
+	while x < 4:
+
+		if evaluation[x] == False:
+
+			time.sleep(1)
+			#playsound(evaluation_audios_es[x])
+			print(evaluation_audios_es[x])
+
+		else:
+
+			count_lack = count_lack - 1
+
+		x = x + 1
+
+	if count_lack == 0:
+
+		password_checking_ok = True
+		#playsound('Audios/buen_trabajo.mp3')
+		#time.sleep(2)
+
+	evaluation.append(password_checking_ok)
+
+	return evaluation
+
+
 def login_user(username, password, role):
 
 	global results
@@ -25,7 +88,7 @@ def login_user(username, password, role):
 	global login_check
 	global user_old
 	global salt
-
+	
 	results = []
 	wdatos = bytes(password, 'utf-8')
 	h = hashlib.new(algoritmo, wdatos)
@@ -55,13 +118,21 @@ def login_user(username, password, role):
 
 		user_old = ''
 		login_check = False
-		miCursor1.execute(sql2, sql2_data)
-		miCursor1.execute(sql202, sql202_data)
-		miCursor1.execute(sql1, sql1_data)
-		dlt2 = miCursor1.fetchall()
-		user_db = dlt2[0][1]
-		login_check = True
-		user_old = 'New'
+		pass_check = check_master_password(password)
+
+		if pass_check[4]:
+
+			miCursor1.execute(sql2, sql2_data)
+			miCursor1.execute(sql202, sql202_data)
+			miCursor1.execute(sql1, sql1_data)
+			dlt2 = miCursor1.fetchall()
+			user_db = dlt2[0][1]
+			login_check = True
+			user_old = 'New'
+
+		else:
+
+			user_old = 'Weak'
 
 	elif len(dlt1) > 0 and hash2 == dlt1[0][2]:
 

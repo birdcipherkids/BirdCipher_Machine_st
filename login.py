@@ -33,6 +33,8 @@ with login:
 			if submit_button:
 
 				dynamic_value = ['', '']
+				evaluation_audios_es = ['Audios/caracter_especial.mp3', 'Audios/letra_mayuscula.mp3', 'Audios/letra_minuscula.mp3', 
+				'Audios/numero_contrasena.mp3']
 				print(user)
 				dynamic_value = login_user(user, passw, role_login)
 				audio_file_path = ''
@@ -42,7 +44,19 @@ with login:
 
 				with placeholder.container():
 
-					if dynamic_value[1] == 'New':
+					if dynamic_value[1] == 'Weak':
+
+						vid = check_master_password(passw)
+
+						for i in range(len(vid) - 1):
+
+							if vid[i] == False:
+
+								audio_file_path = evaluation_audios_es[i]
+								st.audio(audio_file_path, format = 'audio/mp3', autoplay = True)
+								time.sleep(5)
+
+					elif dynamic_value[1] == 'New':
 
 						audio_file_path = bambu_sound
 						st.audio(audio_file_path, format = 'audio/mp3', autoplay = True)
