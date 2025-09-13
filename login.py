@@ -172,18 +172,31 @@ with passphrase:
 
 	with st.form(key = 'passphrase_send_form', enter_to_submit = False):
 
-		st.write('')
-		st.write('ADD PASSPHRASE TO YOUR VAULT')
+		col_passphr1, col_passphr2 = st.columns([2,1])
+
+		with col_passphr1:
+
+			st.subheader('Add passphrase to your vault')
 		
-		separators = st.radio('Define the separator for your secrets words:', ['$', '.', '_', '!', '?'], horizontal=True)
-		passphrase_length = st.slider('Define the number of secret words for your password', min_value = 3, max_value = 10, value = 4,
-			width = 550)
+			separators = st.radio('Define the separator for your secrets words:', [' $ ', ' . ', ' _ ', ' ! ', ' ? '], width = 'stretch', horizontal=True)
+			passphrase_length = st.slider('Define the number of secret words for your password', min_value = 3, max_value = 10, value = 4,
+				width = 500)
 
-		send_my_passphrase = st.form_submit_button('Add passphrase to your vault', type = 'primary')
+			app_passphrase = st.text_input('Enter the app for your password: ', width = 300)
+			username_passphr = st.text_input('Enter your username for the app: ', width = 300)
+			send_my_passphrase = st.form_submit_button('Add passphrase to your vault', type = 'primary')
 
-		if send_my_passphrase:
+			if send_my_passphrase:
 
-			split_secretwords(user_db, passphrase_length, separators)
+				passphrase_final = split_secretwords(user_db, passphrase_length, separators)
+				send_random_password(user_db, passw, app_passphrase, username_passphr, passphrase_final)
+				passphrase_app = st.text_input('Your password for the app is: ', width = 500, value = passphrase_final)
+
+		with col_passphr2:
+
+			col_passphr2.image('Images/BirdCipher-passphrase.png')
+
+		
 
 
 
