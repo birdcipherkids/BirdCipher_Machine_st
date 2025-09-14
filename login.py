@@ -10,8 +10,8 @@ audio_file_path = ''
 
 
 st.header('Welcome to BirdCipher Machine')
-login, passcreator, passphrase, vault, face_recog = st.tabs([
-	'Log in', 'Password Generator', 'Passphrase Generator', 'Password Vault', 'Face Recognition'])
+login, face_recog, passcreator, passphrase, vault = st.tabs([
+	'Log in', 'Face recognition', 'Password Generator', 'Passphrase Generator', 'Password Vault'])
 dynamic_value = ['', '']
 resulting_password = ['', '']
 password_final = ''
@@ -274,6 +274,12 @@ with vault:
 		with col_vault2:
 
 			col_vault2.image('Images/Merkaba.png')
+
+
+
+#with face_recog:
+
+
 
 	
 

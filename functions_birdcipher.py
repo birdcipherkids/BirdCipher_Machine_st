@@ -9,6 +9,8 @@ from pyhibp import pwnedpasswords as pw
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+import face_recognition
+from psycopg2 import sql
 from hash import *
 from Practice_fernet_with_password import *
 
@@ -444,6 +446,10 @@ def split_secretwords(username, num_words, sep):
 	print(passphrase)
 
 	return passphrase
+
+
+
+
 
 
 
