@@ -30,7 +30,7 @@ def check_master_password(password_checking):
 
 
 	password_to_evaluate = password_checking
-	evaluation = [False, False, False, False]
+	evaluation = [False, False, False, False, False]
 	evaluation_audios_es = ['Audios/caracter_especial.mp3', 'Audios/letra_mayuscula.mp3', 'Audios/letra_minuscula.mp3', 
 	'Audios/numero_contrasena.mp3']
 
@@ -53,6 +53,11 @@ def check_master_password(password_checking):
 			evaluation[3] = True
 
 
+	if len(password_checking) >= 15:
+
+		evaluation[4] = True
+
+
 	count_lack = 4
 	x = 0
 
@@ -60,8 +65,7 @@ def check_master_password(password_checking):
 
 		if evaluation[x] == False:
 
-			time.sleep(1)
-			#playsound(evaluation_audios_es[x])
+			
 			print(evaluation_audios_es[x])
 
 		else:
@@ -70,12 +74,11 @@ def check_master_password(password_checking):
 
 		x = x + 1
 
-	if count_lack == 0:
+	if count_lack == 0 and evaluation[4]:
 
 		password_checking_ok = True
-		#playsound('Audios/buen_trabajo.mp3')
-		#time.sleep(2)
-
+		
+		
 	evaluation.append(password_checking_ok)
 
 	return evaluation
@@ -120,7 +123,7 @@ def login_user(username, password, role):
 		login_check = False
 		pass_check = check_master_password(password)
 
-		if pass_check[4]:
+		if pass_check[5]:
 
 			miCursor1.execute(sql2, sql2_data)
 			miCursor1.execute(sql202, sql202_data)

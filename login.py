@@ -34,7 +34,7 @@ with login:
 
 				dynamic_value = ['', '']
 				evaluation_audios_es = ['Audios/caracter_especial.mp3', 'Audios/letra_mayuscula.mp3', 'Audios/letra_minuscula.mp3', 
-				'Audios/numero_contrasena.mp3']
+				'Audios/numero_contrasena.mp3', 'Audios/Longitud_contrasena.mp3']
 				print(user)
 				dynamic_value = login_user(user, passw, role_login)
 				audio_file_path = ''
