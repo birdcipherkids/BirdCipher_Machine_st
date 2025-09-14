@@ -3,9 +3,9 @@ from functions_birdcipher import *
 import time
 
 bambu_sound = 'Audios/bambu_click.mp3'
-audio_login_created = 'Audios/NewUserCreated.mp3'
-audio_login_correct = 'Audios/CorrectLogin.mp3'
-audio_login_incorrect = 'Audios/Incorrect_password.mp3'
+audio_login_created = 'Audios/Usuario_Creado.mp3'
+audio_login_correct = 'Audios/Sesion_Iniciada.mp3'
+audio_login_incorrect = 'Audios/Contrasena_Incorrecta.mp3'
 audio_file_path = ''
 
 
@@ -62,6 +62,7 @@ with login:
 						st.audio(audio_file_path, format = 'audio/mp3', autoplay = True)
 						audio_file_path = audio_login_created
 						st.audio(audio_file_path, format = 'audio/mp3', autoplay = True)
+						time.sleep(20)
 
 					
 					elif dynamic_value[1] == 'Old':
@@ -70,6 +71,7 @@ with login:
 						st.audio(audio_file_path, format = 'audio/mp3', autoplay = True)
 						audio_file_path = audio_login_correct
 						st.audio(audio_file_path, format = 'audio/mp3', autoplay = True)
+						time.sleep(20)
 
 					elif dynamic_value[1] == 'Incorrect':
 
@@ -77,9 +79,9 @@ with login:
 						st.audio(audio_file_path, format = 'audio/mp3', autoplay = True)
 						audio_file_path = audio_login_incorrect
 						st.audio(audio_file_path, format = 'audio/mp3', autoplay = True)
+						time.sleep(5)
 
 
-				time.sleep(13)
 				placeholder.empty()
 
 				
