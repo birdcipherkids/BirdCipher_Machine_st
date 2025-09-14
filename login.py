@@ -20,11 +20,11 @@ with login:
 
 	with st.form(key = 'login_button_form', enter_to_submit = False):
 
-		col1, col2 = st.columns([3, 1])
+		col1, col2 = st.columns([2, 1])
 
 		with col1:
 
-			st.subheader('Log in to BirdCipher')
+			st.subheader('Sign in or create a new user on BirdCipher')
 			user = st.text_input('Username', key = 'username', width = 500)
 			passw = st.text_input('Password', key = 'main_password', type = 'password', width = 500)
 			role_login = st.text_input('Role', key = 'role', width = 500)
@@ -35,6 +35,7 @@ with login:
 				dynamic_value = ['', '']
 				evaluation_audios_es = ['Audios/caracter_especial.mp3', 'Audios/letra_mayuscula.mp3', 'Audios/letra_minuscula.mp3', 
 				'Audios/numero_contrasena.mp3', 'Audios/Longitud_contrasena.mp3']
+				data_breaches = ['Audios/Num_filtraciones_hibp_0.mp3', 'Audios/Num_filtraciones_hibp_1.mp3']
 				print(user)
 				dynamic_value = login_user(user, passw, role_login)
 				audio_file_path = ''
@@ -87,7 +88,30 @@ with login:
 				
 		with col2:
 
-			col2.image('Images/BirdCipher-logo.png')
+			st.write('')
+			st.write('')
+			#col2.image('Images/BirdCipher-logo.png')
+			col2.image('Images/HIBP.png')
+
+			if submit_button:
+
+				pass_hibp_breaches = hibp_breach(passw)
+				placehold_hibp = st.empty()
+
+				if pass_hibp_breaches:
+
+					audio_hibp = data_breaches[1]
+					st.audio(audio_hibp, format = 'audio/mp3', autoplay = True)
+
+				else:
+
+					audio_hibp = data_breaches[0]
+					st.audio(audio_hibp, format = 'audio/mp3', autoplay = True)
+
+				placehold_hibp.empty()
+
+				hibp_rec = st.text_input('Password breaches: ', value = pass_hibp_breaches)
+
 
 	if dynamic_value[1] == 'New' or dynamic_value[1] == 'Old':
 

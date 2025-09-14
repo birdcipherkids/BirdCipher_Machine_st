@@ -4,7 +4,8 @@ import random
 import os
 import base64
 import time
-from playsound import playsound
+import pyhibp
+from pyhibp import pwnedpasswords as pw
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
@@ -18,6 +19,21 @@ words_password = []
 password_creator = ''
 random_separator = ''
 login_check = False
+
+
+def hibp_breach(password_hibp):
+
+	# Required: A descriptive user agent must be set describing the application consuming
+	#   the HIBP API
+
+	pyhibp.set_user_agent(ua="Awesome application/0.0.1 (An awesome description)")
+
+	# Check a password to see if it has been disclosed in a public breach corpus
+	resp = pw.is_password_breached(password = password_hibp)
+
+	return resp
+
+
 
 
 def check_master_password(password_checking):
@@ -78,7 +94,7 @@ def check_master_password(password_checking):
 
 		password_checking_ok = True
 		
-		
+
 	evaluation.append(password_checking_ok)
 
 	return evaluation
