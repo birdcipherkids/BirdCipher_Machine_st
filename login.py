@@ -34,7 +34,7 @@ with login:
 
 				dynamic_value = ['', '']
 				evaluation_audios_es = ['Audios/caracter_especial.mp3', 'Audios/letra_mayuscula.mp3', 'Audios/letra_minuscula.mp3', 
-				'Audios/numero_contrasena.mp3', 'Audios/Longitud_contrasena.mp3']
+				'Audios/numero_contrasena.mp3', 'Audios/Longitud_contrasena.mp3', 'Audios/Inicio_sesion_no_exitoso.mp3']
 				data_breaches = ['Audios/Num_filtraciones_hibp_0.mp3', 'Audios/Num_filtraciones_hibp_1.mp3']
 				print(user)
 				dynamic_value = login_user(user, passw, role_login)
@@ -48,6 +48,12 @@ with login:
 					if dynamic_value[1] == 'Weak':
 
 						vid = check_master_password(passw)
+
+						if vid[5] == False:
+
+							audio_file_path = evaluation_audios_es[5]
+							st.audio(audio_file_path, format = 'audio/mp3', autoplay = True)
+							time.sleep(5)
 
 						for i in range(len(vid) - 1):
 
@@ -113,6 +119,23 @@ with login:
 				hibp_rec = st.text_input('Password breaches: ', value = pass_hibp_breaches)
 
 
+	#with st.form(key = 'second_authentication_form', enter_to_submit = False):
+
+	enable_2fa = st.checkbox('Habilita segundo factor de autenticación')
+
+	foto_facial = st.camera_input('Toma una foto', disabled = not enable_2fa)
+
+	if foto_facial is not None:
+
+		bytes_data = foto_facial.get_value()
+
+		#send_face_recog = st.form_submit_button('Send data', type="primary")
+
+
+
+
+
+
 	if dynamic_value[1] == 'New' or dynamic_value[1] == 'Old':
 
 		hash_login = st.text_input('Your password hash (SHA 256) is:', width = 700, value = dynamic_value[0])
@@ -121,6 +144,9 @@ with login:
 with passcreator:
 
 	with st.form(key = 'password_button_form', enter_to_submit = False):
+
+		pass_created_rand = 'Audios/Contrasena_creada_guardada_rand.mp3'
+		pass_no_created_rand = 'Audios/contrasena_no_creada_rand.mp3'
 
 		st.subheader('Create your random password')
 
@@ -144,16 +170,7 @@ with passcreator:
 
 			special_chr = st.checkbox('Punctuation')
 
-		#create_pass_button = st.button('Create password', type = 'primary')
-
-		#if create_pass_button:
-
-			
-		
-
-
-	#with st.form(key = 'password_send_form', enter_to_submit = False):
-
+	
 		st.subheader('Store the password in your vault')
 
 		col_pass1, col_pass2 = st.columns([2,1])
@@ -170,7 +187,17 @@ with passcreator:
 				resulting_password = password_generator(pass_length, uppercase_chr, lowercase_chr, numerical_chr, special_chr)
 				password_crtd = st.text_input('Your password is: ', key = 'password_cr', width = 500, value = resulting_password[0])
 				hash_login = st.text_input('Your password hash (SHA 256) is:', width = 700, value = resulting_password[1])
-				send_random_password(user_db, passw, app_input, user_app_input, password_crtd)
+				send_rand_ok = send_random_password(user_db, passw, app_input, user_app_input, password_crtd)
+
+				if send_rand_ok:
+
+					audio_file_path_rand = pass_created_rand
+					st.audio(audio_file_path_rand, format = 'audio/mp3', autoplay = True)
+
+				else:
+
+					audio_file_path_rand = pass_no_created_rand
+					st.audio(audio_file_path_rand, format = 'audio/mp3', autoplay = True)
 
 		with col_pass2:
 

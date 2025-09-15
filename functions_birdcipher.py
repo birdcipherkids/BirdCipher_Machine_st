@@ -338,36 +338,39 @@ def send_random_password(username, password, app, user_app, pass_app):
 	h = hashlib.new(algoritmo, qdatos)
 	hash31 = HASH.generaHash(h)
 	print('the password is: ', pass_app)
+	send_rand_success = False
 
-	miConexion31 = psycopg2.connect(host = 'bps57o4k0svfjp9fi4vv-postgresql.services.clever-cloud.com', port = 50013, 
-	user = 'u8kpoxoaaxlswsvwrn12', dbname = 'bps57o4k0svfjp9fi4vv', password = '5Q00YR5C0e4pnZZEnd5e')
+	try:
 
-	miCursor31 = miConexion31.cursor()
-	sql31 = 'select * from users where username = (%s)'
-	sql31_data = (username, )
-	miCursor31.execute(sql31, sql31_data)
-	dlt31 = miCursor31.fetchall()
-	salt_user = dlt31[0][4]
-	salt_user2 = base64.b64decode(salt_user)
-	print(salt_user2)
+		miConexion31 = psycopg2.connect(host = 'bps57o4k0svfjp9fi4vv-postgresql.services.clever-cloud.com', port = 50013, 
+		user = 'u8kpoxoaaxlswsvwrn12', dbname = 'bps57o4k0svfjp9fi4vv', password = '5Q00YR5C0e4pnZZEnd5e')
 
-	token_user_final = encrypt_with_fernet(salt_user2, password, pass_app)
+		miCursor31 = miConexion31.cursor()
+		sql31 = 'select * from users where username = (%s)'
+		sql31_data = (username, )
+		miCursor31.execute(sql31, sql31_data)
+		dlt31 = miCursor31.fetchall()
+		salt_user = dlt31[0][4]
+		salt_user2 = base64.b64decode(salt_user)
+		print(salt_user2)
+		token_user_final = encrypt_with_fernet(salt_user2, password, pass_app)
+		sql311 = 'insert into password_vault(username, password, app, user_app, pass_app) values(%s, %s, %s, %s, %s)'
+		sql311_data = (username, hash31, app, user_app, token_user_final.decode())
 
-	sql311 = 'insert into password_vault(username, password, app, user_app, pass_app) values(%s, %s, %s, %s, %s)'
-	sql311_data = (username, hash31, app, user_app, token_user_final.decode())
+		#if login_check and username != '' and password == hash31:
 
-	#if login_check and username != '' and password == hash31:
-
-	miCursor31.execute(sql311, sql311_data)
-
-
-	miConexion31.commit()
-	miConexion31.close()
+		miCursor31.execute(sql311, sql311_data)
 
 
+		miConexion31.commit()
+		miConexion31.close()
+		send_rand_success = True
 
+	except IndexError:
 
-#def send_passphrase():
+		print('Debes iniciar sesion o crear tu usuario')
+
+	return send_rand_success
 
 
 
