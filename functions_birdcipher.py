@@ -230,7 +230,7 @@ def query_rockyou(word):
 
 	hacked_word = False
 
-	with open('C:/rockyou.txt', 'r', encoding = 'utf-8', errors='replace') as file:
+	with open('rockyou.txt', 'r', encoding = 'utf-8', errors='replace') as file:
 
 		while True:
 
