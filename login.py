@@ -210,6 +210,7 @@ with passphrase:
 
 		rock_you_no_approved = 'Audios/Rock_you_yes.mp3'
 		rock_you_approved = 'Audios/Rock_you_no.mp3'
+		pass_no_created_phrase = 'Audios/contrasena_no_creada_rand.mp3'
 
 		st.write('')
 		
@@ -241,7 +242,14 @@ with passphrase:
 						audio_file_path_rockyou = rock_you_approved
 						st.audio(audio_file_path_rockyou, format = 'audio/mp3', autoplay = True)
 
-						
+					else:
+
+						audio_file_path_rockyou = pass_no_created_phrase
+						st.audio(audio_file_path_rockyou, format = 'audio/mp3', autoplay = True)
+
+
+
+
 	with st.form(key = 'passphrase_send_form', enter_to_submit = False):
 
 		col_passphr1, col_passphr2 = st.columns([2,1])
