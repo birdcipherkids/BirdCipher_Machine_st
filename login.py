@@ -208,6 +208,9 @@ with passphrase:
 
 	with st.form(key = 'passphrase_button_form', enter_to_submit = False):
 
+		rock_you_no_approved = 'Audios/Rock_you_yes.mp3'
+		rock_you_approved = 'Audios/Rock_you_no.mp3'
+
 		st.write('')
 		
 		col_words_pss, col_words_button_pss = st.columns(2, vertical_alignment = 'bottom')
@@ -227,16 +230,18 @@ with passphrase:
 
 				if hackingword_results == True:
 
-					print('Hacked word')
+					audio_file_path_rockyou = rock_you_no_approved
+					st.audio(audio_file_path_rockyou, format = 'audio/mp3', autoplay = True)
 
 				elif hackingword_results == False:
 
 					if login_check:
 
 						words_inclusion(entry_words_pass_pss, user_db)
-						print('Word added')
+						audio_file_path_rockyou = rock_you_approved
+						st.audio(audio_file_path_rockyou, format = 'audio/mp3', autoplay = True)
 
-
+						
 	with st.form(key = 'passphrase_send_form', enter_to_submit = False):
 
 		col_passphr1, col_passphr2 = st.columns([2,1])
