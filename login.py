@@ -9,9 +9,9 @@ audio_login_incorrect = 'Audios/Contrasena_Incorrecta.mp3'
 audio_file_path = ''
 
 
-st.header('Welcome to BirdCipher Machine')
+st.header('Bienvenido a BirdCipher Machine')
 login, face_recog, passcreator, passphrase, vault = st.tabs([
-	'Log in', 'Face recognition', 'Password Generator', 'Passphrase Generator', 'Password Vault'])
+	'Inicia sesión', 'Reconocimiento facial', 'Generador de contraseñas', 'Generador de frase contraseña', 'Baúl de contraseñas'])
 dynamic_value = ['', '']
 resulting_password = ['', '']
 password_final = ''
@@ -24,11 +24,11 @@ with login:
 
 		with col1:
 
-			st.subheader('Sign in or create a new user on BirdCipher')
-			user = st.text_input('Username', key = 'username', width = 500)
-			passw = st.text_input('Password', key = 'main_password', type = 'password', width = 500)
-			role_login = st.text_input('Role', key = 'role', width = 500)
-			submit_button = st.form_submit_button('Send data', type="primary")
+			st.subheader('Inicia sesión o crea un nuevo usuario en BirdCipher')
+			user = st.text_input('Usuario', key = 'username', width = 500)
+			passw = st.text_input('Contraseña', key = 'main_password', type = 'password', width = 500)
+			role_login = st.text_input('Rol', key = 'role', width = 500)
+			submit_button = st.form_submit_button('Envía tus datos', type="primary")
 
 			if submit_button:
 
@@ -119,6 +119,13 @@ with login:
 				hibp_rec = st.text_input('Password breaches: ', value = pass_hibp_breaches)
 
 
+	if dynamic_value[1] == 'New' or dynamic_value[1] == 'Old':
+
+		hash_login = st.text_input('El hash de tu contraseña (SHA 256) es:', width = 700, value = dynamic_value[0])
+
+
+with face_recog:
+
 	#with st.form(key = 'second_authentication_form', enter_to_submit = False):
 
 	enable_2fa = st.checkbox('Habilita segundo factor de autenticación')
@@ -132,15 +139,6 @@ with login:
 		#send_face_recog = st.form_submit_button('Send data', type="primary")
 
 
-
-
-
-
-	if dynamic_value[1] == 'New' or dynamic_value[1] == 'Old':
-
-		hash_login = st.text_input('Your password hash (SHA 256) is:', width = 700, value = dynamic_value[0])
-
-
 with passcreator:
 
 	with st.form(key = 'password_button_form', enter_to_submit = False):
@@ -148,45 +146,45 @@ with passcreator:
 		pass_created_rand = 'Audios/Contrasena_creada_guardada_rand.mp3'
 		pass_no_created_rand = 'Audios/contrasena_no_creada_rand.mp3'
 
-		st.subheader('Create your random password')
+		st.subheader('Crea tu contraseña aleatoria')
 
-		pass_length = st.slider('Select your password length', min_value = 10, max_value = 40, value = 20, width = 600)
+		pass_length = st.slider('Selecciona la longitud para tu contraseña', min_value = 10, max_value = 40, value = 20, width = 600)
 
 		colm1, colm2, colm3, colm4 = st.columns(4)
 
 		with colm1:
 
-			uppercase_chr = st.checkbox("Upper case")
+			uppercase_chr = st.checkbox("Mayúsculas")
 
 		with colm2:
 
-			lowercase_chr = st.checkbox('Lower case')
+			lowercase_chr = st.checkbox('Minúsculas')
 
 		with colm3:
 
-			numerical_chr = st.checkbox('Numerical')
+			numerical_chr = st.checkbox('Números')
 
 		with colm4:
 
-			special_chr = st.checkbox('Punctuation')
+			special_chr = st.checkbox('Signos de puntuación')
 
 	
-		st.subheader('Store the password in your vault')
+		st.subheader('Guarda la contraseña en tu baúl')
 
 		col_pass1, col_pass2 = st.columns([2,1])
 
 		with col_pass1:
 
-			app_input = st.text_input('Enter the app name for your password: ', width = 700)
-			user_app_input = st.text_input('Enter your username for the app: ', width = 700)
-			submit_password = st.form_submit_button('Save your password in vault', type = 'primary')
+			app_input = st.text_input('Ingresa el nombre de la App para tu contraseña: ', width = 700)
+			user_app_input = st.text_input('Ingresa tu nombre de usuario en la App: ', width = 700)
+			submit_password = st.form_submit_button('Guarda la contraseña en tu baúl', type = 'primary')
 
 			if submit_password:
 
 				resulting_password = ['', '']
 				resulting_password = password_generator(pass_length, uppercase_chr, lowercase_chr, numerical_chr, special_chr)
-				password_crtd = st.text_input('Your password is: ', key = 'password_cr', width = 500, value = resulting_password[0])
-				hash_login = st.text_input('Your password hash (SHA 256) is:', width = 700, value = resulting_password[1])
+				password_crtd = st.text_input('Tu contraseña es: ', key = 'password_cr', width = 500, value = resulting_password[0])
+				hash_login = st.text_input('El hash de tu contraseña (SHA 256) es:', width = 700, value = resulting_password[1])
 				send_rand_ok = send_random_password(user_db, passw, app_input, user_app_input, password_crtd)
 
 				if send_rand_ok:
@@ -218,11 +216,11 @@ with passphrase:
 
 		with col_words_pss:
 
-			entry_words_pass_pss = st.text_input('Enter your secret word for password creation: ', width = 400)
+			entry_words_pass_pss = st.text_input('Ingresa tu palabra secreta para crear contraseñas: ', width = 400)
 
 		with col_words_button_pss:
 
-			entry_words_button_pss = st.form_submit_button('Add word to your vault', type = 'primary')
+			entry_words_button_pss = st.form_submit_button('Guarda la palabra en tu baúl', type = 'primary')
 
 			if entry_words_button_pss:
 
@@ -248,43 +246,48 @@ with passphrase:
 						st.audio(audio_file_path_rockyou, format = 'audio/mp3', autoplay = True)
 
 
-
-
 	with st.form(key = 'passphrase_send_form', enter_to_submit = False):
+
+		passphrase_saved = 'Audios/Frase_contrasena_guardada.mp3'
 
 		col_passphr1, col_passphr2 = st.columns([2,1])
 
 		with col_passphr1:
 
-			st.subheader('Add passphrase to your vault')
+			st.subheader('Agrega la frase contraseña a tu baúl')
 		
-			separators = st.radio('Define the separator for your secrets words:', [' $ ', ' . ', ' _ ', ' ! ', ' ? '], width = 'stretch', horizontal=True)
-			passphrase_length = st.slider('Define the number of secret words for your password', min_value = 3, max_value = 10, value = 4,
+			separators = st.radio('Define el separador para tus palabras secretas:', [' $ ', ' . ', ' _ ', ' ! ', ' ? '], width = 'stretch', horizontal=True)
+			passphrase_length = st.slider('Define el número de palabras secretas para tu contraseña', min_value = 3, max_value = 10, value = 4,
 				width = 500)
 
-			app_passphrase = st.text_input('Enter the app for your password: ', width = 300)
-			username_passphr = st.text_input('Enter your username for the app: ', width = 300)
-			send_my_passphrase = st.form_submit_button('Add passphrase to your vault', type = 'primary')
+			app_passphrase = st.text_input('Ingresa el nombre de la App para tu contraseña: ', width = 300)
+			username_passphr = st.text_input('Ingresa tu nombre de usuario en la App: ', width = 300)
+			send_my_passphrase = st.form_submit_button('Agrega la frase contraseña a tu baúl', type = 'primary')
 
 			if send_my_passphrase:
 
 				passphrase_final = split_secretwords(user_db, passphrase_length, separators)
-				send_random_password(user_db, passw, app_passphrase, username_passphr, passphrase_final)
-				passphrase_app = st.text_input('Your password for the app is: ', width = 500, value = passphrase_final)
+				send_passphrase_final = send_random_password(user_db, passw, app_passphrase, username_passphr, passphrase_final)
+				passphrase_app = st.text_input('Tu contraseña para la app es: ', width = 500, value = passphrase_final)
+
+				if send_passphrase_final:
+
+					audio_passphrase = passphrase_saved
+					st.audio(audio_passphrase, format = 'audio/mp3', autoplay = True)
 
 		with col_passphr2:
 
 			col_passphr2.image('Images/BirdCipher-passphrase.png')
-
-		
-
 
 
 with vault:
 
 	with st.form(key = 'vault_button_form', enter_to_submit = False):
 
-		st.subheader('Password vault')
+		password_recovered = 'Audios/Contrasena_recuperada.mp3'
+		password_no_recovered = 'Audios/Contrasena_no_recuperada.mp3'
+
+		st.subheader('Baúl de contraseñas')
 
 		col_vault1, col_vault2 = st.columns([2,1])
 		results_vault_for_app = ['','']
@@ -300,15 +303,25 @@ with vault:
 
 		with col_vault1:
 
-			user_app_enquiry = st.text_input('Enter the app name to which you wish to login: ', width = 400)
-			submit_vault = st.form_submit_button('Bring your password', type = 'primary')
+			user_app_enquiry = st.text_input('Ingresa el nombre de la app en la que quieres iniciar sesión: ', width = 400)
+			submit_vault = st.form_submit_button('Recupera tu contraseña', type = 'primary')
 
 			if submit_vault:
 
 				results_vault_for_app = ['','']
 				results_vault_for_app = bring_password(user_db, passw, user_app_enquiry)
-				username_app_enquiry = st.text_input('Your username for this app is: ', width = 400, value = results_vault_for_app[0])
-				password_app_enquiry = st.text_input('Your password for this app is: ', width = 400, value = results_vault_for_app[1])
+
+				if results_vault_for_app[2]:
+
+					username_app_enquiry = st.text_input('Tu nombre de usuario para esta App es: ', width = 400, value = results_vault_for_app[0])
+					password_app_enquiry = st.text_input('Tu contraseña para esta App es: ', width = 400, type = 'password', value = results_vault_for_app[1])
+					audio_file_path_vault = password_recovered
+					st.audio(audio_file_path_vault, format = 'audio/mp3', autoplay = True)
+
+				elif results_vault_for_app[2] == False:
+
+					audio_file_path_vault = password_no_recovered
+					st.audio(audio_file_path_vault, format = 'audio/mp3', autoplay = True)
 
 
 		with col_vault2:
@@ -316,8 +329,6 @@ with vault:
 			col_vault2.image('Images/Merkaba.png')
 
 
-
-#with face_recog:
 
 
 
