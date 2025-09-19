@@ -426,6 +426,7 @@ def bring_password(username, password, app):
 	except IndexError:
 
 		result_vault_query = ['', '', False]
+		print(result_vault_query)
 
 	return result_vault_query
 
